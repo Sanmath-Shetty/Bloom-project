@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp</title>
+    <link rel="icon" type="image/png" href="bloom_logo.png">
+    <style>
+        div{
+            background-color: #aed7b6; 
+            padding: 30px; 
+        }
+        .form{
+            background-color: white;
+            border: 3px solid #1B845A;
+            border-radius: 25px;
+            padding: 50px;
+            width: 40%;
+            margin: 50px auto;
+            text-align: center;
+        }
+        a:hover{
+            color: #1B845A;
+        }
+        #inputName, #inputAge, #inputUsername, #inputEmail, #inputPassword, #confirmPassword{
+            padding: 10px; 
+            border-width: 2px;
+        }
+        button{
+            padding: 10px 30px;
+            border-radius: 5px;
+            background-color: #1B845A;
+            color: white;
+            transition: 0.5s;
+        }
+        button:hover{
+            box-shadow: 3px 3px 4px #1B845A ;
+        }
+        button:focus{
+            box-shadow: none;
+        }
+        .form a {
+            color: black;
+            padding: 1rem;
+            text-decoration: none;
+        }
+        .form a:hover {
+            color: #1B845A;
+            text-decoration: underline;
+        }
+        footer{
+            padding: 20px;
+            text-align: center;
+            background-color: rgb(238, 241, 239);
+            color: gray;
+            margin-top: 10px;
+        }
+        footer a{
+            color: #1B845A;
+            padding: 4px;
+            text-decoration: none;
+        }
+        footer a:hover{
+            font-weight: bolder;
+        }
+        @media screen and (max-width: 500px){
+            .form{
+                padding: 20px;
+                width: 80%;
+            }
+            #inputName, #inputAge, #inputUsername, #inputEmail, #inputPassword, #confirmPassword{
+            padding: 5px; 
+            border-width: 2px;
+        }
+        }
+    </style>
+</head>
+<body>
+    <div><form id="SignUpForm" class="form" action="" method="post">
+        <img src="bloom_logo.png" height="125px" style="margin: auto;"><br><br>
+
+        <p>*At least 8 characters (less than 25)<br>combinations of letter in both case, numbers and special characters</p>
+        <input type="text" id="inputUsername" name="inputUsername" placeholder="Create your username" required><br>
+        <span id="inputUsernameFB"></span><br><br>
+
+        <input type="number" id="inputAge" name="inputAge" min="13" placeholder="Enter your age" required><br>
+        <span id="inputAgeFB"></span><br><br>
+
+        
+        <p>Select your gender:</p>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label>
+
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label>
+
+        <input type="radio" id="other" name="gender" value="other">
+        <label for="other">Other</label><br>
+        <span id="genderFB"></span>
+
+
+        <br><br><br><input type="email" id="inputEmail" name="inputEmail" placeholder="Enter your email" required><br>
+        <span id="inputEmailFB"></span><br><br>
+
+        <p>*At least 8 characters (less than 25)<br>combinations of letter in both case, numbers and special characters</p>
+        <input type="password" id="inputPassword" name="inputPassword" placeholder="Create password" required><br>      
+        <span id="inputPasswordFB"></span><br><br>
+
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required><br>      
+        <span id="confirmPasswordFB"></span><br><br>
+
+        <button type="submit">SignUp</button><br><br>
+    </form></div>
+    <script src="sign-up.js"></script>
+    <footer>
+        <p>&copy; 2025 BLOOM | All rights reserved</p>
+        <a href="terms.html">Terms and Conditions</a><br>
+        <a href="privacy.html">Privacy Policy</a><br>
+        <a href="#">Contact Us</a>
+    </footer>
+</body>
+</html>
