@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mental Health Questionnaire</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #aed7b6;
+    color: #1B845A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .container {
+    width: 95%;
+    max-width: 700px;
+    background: white;
+    padding: 45px 35px;
+    border: 3px solid #1B845A;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    color: #276727;
+  }
+
+  button.option {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    background-color: #e4f5e4;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button.option:hover {
+    background-color: #c7ecc7;
+  }
+
+  button.option.selected {
+    background-color: #76c776;
+    color: white;
+  }
+
+  #nextBtn {
+    margin-top: 20px;
+    padding: 10px 25px;
+    background-color: #276727;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #nextBtn:hover {
+    background-color: #2e7d32;
+  }
+
+  .result {
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .bar-container {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin: 10px 0;
+    width: 100%;
+    height: 25px;
+    overflow: hidden;
+  }
+
+  .bar {
+    height: 100%;
+    border-radius: 10px;
+    text-align: right;
+    padding-right: 10px;
+    color: white;
+    font-weight: bold;
+    line-height: 25px;
+    width: 0%;
+    transition: width 1.5s ease;
+  }
+
+  .Anxiety { background-color: #2e7d32; }
+  .Stress { background-color: #4caf50; }
+  .Depression { background-color: #81c784; }
+  .Happiness { background-color: #a5d6a7; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2 id="question">Loading...</h2>
+  <div id="options"></div>
+  <button id="nextBtn">Next</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+const questions = [
+  { text: "How often did you feel nervous, anxious, or on edge today?", factor: "Anxiety" },
+  { text: "How often did you feel overwhelmed by your responsibilities or tasks?", factor: "Stress" },
+  { text: "How often did you have little interest or pleasure in doing things you normally enjoy?", factor: "Depression" },
+  { text: "How often did you find yourself thinking repeatedly about worries or past events?", factor: "Anxiety" },
+  { text: "How often did you have trouble falling asleep or staying asleep?", factor: "Stress" },
+  { text: "How often did you feel irritable or easily frustrated today?", factor: "Stress" },
+  { text: "How often did you experience sudden mood swings?", factor: "Depression" },
+  { text: "How often did you feel hopeless or pessimistic about the future?", factor: "Depression" },
+  { text: "How often did you find it difficult to concentrate or focus on tasks?", factor: "Stress" },
+  { text: "How often did you avoid social interactions or feel withdrawn?", factor: "Depression" },
+  { text: "How often did you have moments of racing thoughts or difficulty calming your mind?", factor: "Anxiety" },
+  { text: "How often did you feel relaxed and content at some point today?", factor: "Happiness" }
+];
+
+const options = ["Never", "Sometimes", "Often", "Always"];
+const factorScores = { Anxiety: 0, Stress: 0, Depression: 0, Happiness: 0 };
+const factorWeight = { "Never": 0, "Sometimes": 1, "Often": 2, "Always": 3 };
+
+let current = 0;
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const nextBtn = document.getElementById("nextBtn");
+const resultEl = document.getElementById("result");
+
+function showQuestion() {
+  if (current >= questions.length) {
+    calculateResult();
+    return;
+  }
+
+  questionEl.textContent = questions[current].text;
+  optionsEl.innerHTML = "";
+
+  for (let i = 0; i < options.length; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = options[i];
+    btn.className = "option";
+
+    btn.onclick = function () {
+      Array.from(optionsEl.children).forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+    };
+
+    optionsEl.appendChild(btn);
+  }
+}
+
+nextBtn.onclick = function () {
+  const selected = document.querySelector(".option.selected");
+  if (!selected) {
+    alert("Please select an option.");
+    return;
+  }
+
+  const factor = questions[current].factor;
+  let score = factorWeight[selected.textContent];
+
+  if(factor === "Happiness") score = 3 - score;
+
+  factorScores[factor] += score;
+
+  current++;
+  showQuestion();
+};
+
+function calculateResult() {
+  questionEl.textContent = "Result:";
+  optionsEl.innerHTML = "";
+  nextBtn.style.display = "none";
+
+  const totalScore = Object.values(factorScores).reduce((a,b) => a+b, 0);
+
+  resultEl.innerHTML = "";
+  for (const f in factorScores) {
+    const percent = totalScore ? Math.round((factorScores[f]/totalScore)*100) : 0;
+
+    const bar = document.createElement("div");
+    bar.className = `bar ${f}`;
+    bar.textContent = percent + "%";
+
+    const container = document.createElement("div");
+    container.className = "bar-container";
+    container.appendChild(bar);
+
+    const label = document.createElement("p");
+    label.innerHTML = `<strong>${f}:</strong>`;
+
+    resultEl.appendChild(label);
+    resultEl.appendChild(container);
+
+    setTimeout(() => {
+      bar.style.width = percent + "%";
+    }, 100); 
+  }
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
