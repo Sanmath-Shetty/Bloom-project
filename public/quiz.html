@@ -5,106 +5,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mental Health Questionnaire</title>
 <style>
-  body {
+  body { 
     font-family: Arial, sans-serif;
-    background-color: #aed7b6;
+    background-color: #aed7b6; 
     color: #1B845A;
-    display: flex;
+    display: flex; 
     justify-content: center;
-    align-items: center;
+    align-items: center; 
     height: 100vh;
     margin: 0;
-  }
-
-  .container {
-    width: 95%;
-    max-width: 700px;
-    background: white;
-    padding: 45px 35px;
+     }
+  .container { 
+    width: 95%; 
+    max-width: 700px; 
+    background: white; 
+    padding: 45px 35px; 
     border: 3px solid #1B845A;
-    border-radius: 15px;
-    text-align: center;
+    border-radius: 15px; 
+    text-align: center; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  }
-
-  h2 {
+    }
+  h2 { 
     color: #276727;
-  }
-
-  button.option {
-    display: block;
-    width: 100%;
-    margin: 8px 0;
-    padding: 15px;
-    border: none;
+    }
+  button.option { 
+    display: block; 
+    width: 100%; 
+    margin: 8px 0; 
+    padding: 15px; 
+    border: none; 
     border-radius: 8px;
-    background-color: #e4f5e4;
-    cursor: pointer;
+    background-color: #e4f5e4; 
+    cursor: pointer; 
     transition: 0.2s;
-  }
-
-  button.option:hover {
+     }
+  button.option:hover { 
     background-color: #c7ecc7;
-  }
-
-  button.option.selected {
+    }
+  button.option.selected { 
     background-color: #76c776;
-    color: white;
-  }
-
+    color: white; 
+    }
   #nextBtn {
-    margin-top: 20px;
-    padding: 10px 25px;
-    background-color: #276727;
-    color: white;
-    border: none;
+    margin-top: 20px; 
+    padding: 10px 25px; 
+    background-color: #276727; 
+    color: white; 
+    border: none; 
     border-radius: 8px;
-    cursor: pointer;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
+    cursor: pointer; 
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto; 
+    }
   #nextBtn:hover {
-    background-color: #2e7d32;
-  }
-
+     background-color: #2e7d32;
+     }
   .result {
-    text-align: left;
-    margin-top: 20px;
-  }
-
-  .bar-container {
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    margin: 10px 0;
-    width: 100%;
-    height: 25px;
+     text-align: left; 
+     margin-top: 20px; 
+    }
+  .bar-container { 
+    background-color: #e0e0e0; 
+    border-radius: 10px; 
+    margin: 10px 0; 
+    width: 100%; 
+    height: 25px; 
     overflow: hidden;
-  }
-
+    }
   .bar {
-    height: 100%;
-    border-radius: 10px;
-    text-align: right;
-    padding-right: 10px;
-    color: white;
-    font-weight: bold;
-    line-height: 25px;
-    width: 0%;
-    transition: width 1.5s ease;
-  }
-
+     height: 100%; 
+     border-radius: 10px; 
+     text-align: right; 
+     padding-right: 10px; 
+     color: white; 
+     font-weight: bold;
+    line-height: 25px; 
+    width: 0%; 
+    transition: width 1.5s ease; 
+    }
   .Anxiety { background-color: #2e7d32; }
   .Stress { background-color: #4caf50; }
   .Depression { background-color: #81c784; }
   .Happiness { background-color: #a5d6a7; }
+  .Overthinking { background-color: #66bb6a; }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h2 id="question">Loading...</h2>
+  <h2 id="question">Loading</h2>
   <div id="options"></div>
   <button id="nextBtn">Next</button>
   <div id="result" class="result"></div>
@@ -112,55 +102,59 @@
 
 <script>
 const questions = [
-  { text: "How often did you feel nervous, anxious, or on edge today?", factor: "Anxiety" },
-  { text: "How often did you feel overwhelmed by your responsibilities or tasks?", factor: "Stress" },
-  { text: "How often did you have little interest or pleasure in doing things you normally enjoy?", factor: "Depression" },
-  { text: "How often did you find yourself thinking repeatedly about worries or past events?", factor: "Anxiety" },
-  { text: "How often did you have trouble falling asleep or staying asleep?", factor: "Stress" },
-  { text: "How often did you feel irritable or easily frustrated today?", factor: "Stress" },
-  { text: "How often did you experience sudden mood swings?", factor: "Depression" },
-  { text: "How often did you feel hopeless or pessimistic about the future?", factor: "Depression" },
-  { text: "How often did you find it difficult to concentrate or focus on tasks?", factor: "Stress" },
-  { text: "How often did you avoid social interactions or feel withdrawn?", factor: "Depression" },
-  { text: "How often did you have moments of racing thoughts or difficulty calming your mind?", factor: "Anxiety" },
-  { text: "How often did you feel relaxed and content at some point today?", factor: "Happiness" }
+  { text: "How often did you feel genuinely happy or content today?", factor: "Happiness" },
+  { text: "How often did you appreciate the little things in your life?", factor: "Happiness" },
+  { text: "How often did you wake up feeling positive about your day?", factor: "Happiness" },
+  { text: "How often did you feel thankful for the people around you?", factor: "Happiness" },
+  { text: "How often did you feel under pressure to finish tasks on time?", factor: "Stress" },
+  { text: "How often did you feel mentally or emotionally exhausted?", factor: "Stress" },
+  { text: "How often did you find it difficult to relax even during breaks?", factor: "Stress" },
+  { text: "How often did you feel overwhelmed by responsibilities?", factor: "Stress" },
+  { text: "How often did you feel nervous or on edge without a clear reason?", factor: "Anxiety" },
+  { text: "How often did you feel uneasy about situations you can’t control?", factor: "Anxiety" },
+  { text: "How often did you experience a sudden rush of worry or fear?", factor: "Anxiety" },
+  { text: "How often did your heart race due to anxious thoughts?", factor: "Anxiety" },
+  { text: "How often did you replay past events in your mind?", factor: "Overthinking" },
+  { text: "How often did you spend too much time thinking about 'what ifs'?", factor: "Overthinking" },
+  { text: "How often did your thoughts keep you from sleeping peacefully?", factor: "Overthinking" },
+  { text: "How often did you struggle to make decisions because of too much thinking?", factor: "Overthinking" },
+  { text: "How often did you feel sad or emotionally low without a clear reason?", factor: "Depression" },
+  { text: "How often did you lose interest in things that once made you happy?", factor: "Depression" },
+  { text: "How often did you feel like isolating yourself from others?", factor: "Depression" },
+  { text: "How often did you feel like life lacks direction or purpose?", factor: "Depression" }
 ];
 
 const options = ["Never", "Sometimes", "Often", "Always"];
-const factorScores = { Anxiety: 0, Stress: 0, Depression: 0, Happiness: 0 };
-const factorWeight = { "Never": 0, "Sometimes": 1, "Often": 2, "Always": 3 };
-
+const factorScores = { Anxiety: 0, Stress: 0, Depression: 0, Happiness: 0, Overthinking: 0 };
+const factorweight = { "Never": 0, "Sometimes": 1, "Often": 2, "Always": 3 };
 let current = 0;
 
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const nextBtn = document.getElementById("nextBtn");
-const resultEl = document.getElementById("result");
+const questionQ1 = document.getElementById("question");
+const optionsOl = document.getElementById("options");
+const nextBtnEl = document.getElementById("nextBtn");
+const resultRl = document.getElementById("result");
 
 function showQuestion() {
   if (current >= questions.length) {
     calculateResult();
     return;
   }
+  questionQ1.textContent = questions[current].text;
+  optionsOl.innerHTML = "";
 
-  questionEl.textContent = questions[current].text;
-  optionsEl.innerHTML = "";
-
-  for (let i = 0; i < options.length; i++) {
+  options.forEach(opt => {
     const btn = document.createElement("button");
-    btn.textContent = options[i];
+    btn.textContent = opt;
     btn.className = "option";
-
-    btn.onclick = function () {
-      Array.from(optionsEl.children).forEach(b => b.classList.remove("selected"));
+    btn.onclick = () => {
+      Array.from(optionsOl.children).forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
     };
-
-    optionsEl.appendChild(btn);
-  }
+    optionsOl.appendChild(btn);
+  });
 }
 
-nextBtn.onclick = function () {
+nextBtnEl.onclick = function () {
   const selected = document.querySelector(".option.selected");
   if (!selected) {
     alert("Please select an option.");
@@ -168,49 +162,42 @@ nextBtn.onclick = function () {
   }
 
   const factor = questions[current].factor;
-  let score = factorWeight[selected.textContent];
+  let score = factorweight[selected.textContent];
 
-  if(factor === "Happiness") score = 3 - score;
+  if (factor === "Happiness") score = 3 - score;
 
   factorScores[factor] += score;
-
   current++;
   showQuestion();
 };
 
 function calculateResult() {
-  questionEl.textContent = "Result:";
-  optionsEl.innerHTML = "";
-  nextBtn.style.display = "none";
+  questionQ1.textContent = "Result";
+  optionsOl.innerHTML = "";
+  nextBtnEl.style.display = "none";
+  resultRl.innerHTML = "";
 
   const totalScore = Object.values(factorScores).reduce((a,b) => a+b, 0);
 
-  resultEl.innerHTML = "";
   for (const f in factorScores) {
-    const percent = totalScore ? Math.round((factorScores[f]/totalScore)*100) : 0;
-
-    const bar = document.createElement("div");
-    bar.className = `bar ${f}`;
-    bar.textContent = percent + "%";
-
-    const container = document.createElement("div");
-    container.className = "bar-container";
-    container.appendChild(bar);
+    const percent = totalScore ? (factorScores[f] / totalScore) * 100 : 0;
 
     const label = document.createElement("p");
     label.innerHTML = `<strong>${f}:</strong>`;
-
-    resultEl.appendChild(label);
-    resultEl.appendChild(container);
-
-    setTimeout(() => {
-      bar.style.width = percent + "%";
-    }, 100); 
+    const container = document.createElement("div");
+    container.className = "bar-container";
+    const bar = document.createElement("div");
+    bar.className = `bar ${f}`;
+    bar.style.width = percent + "%";
+    bar.textContent = Math.round(percent) + "%";
+    container.appendChild(bar);
+    resultRl.appendChild(label);
+    resultRl.appendChild(container);
   }
 }
 
 showQuestion();
 </script>
-
 </body>
 </html>
+
