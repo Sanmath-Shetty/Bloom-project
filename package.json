@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/Sanmath-Shetty/Bloom-project/issues"
   },
-  "homepage": "https://github.com/Sanmath-Shetty/Bloom-project#readme"
+  "homepage": "https://github.com/Sanmath-Shetty/Bloom-project#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "body-parser": "^2.2.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3"
+  }
 }
