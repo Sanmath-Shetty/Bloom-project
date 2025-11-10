@@ -70,13 +70,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if(inputUsername.value === "" || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]{8,25}$/.test(inputUsername.value)){
             e.preventDefault();
         }
-
-        const gen = document.querySelector('input[name = "gender"]:checked');
-        if(!gen){
-            e.preventDefault();
-            document.getElementById('genderFB').textContent = "Required";
-        }else{
-            document.getElementById('genderFB').textContent = "";
-        }
     });
+
+    Form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const username = inputUsername.value;
+    const age = inputAge.value;
+    const email = inputEmail.value;
+    const password = inputPassword.value;
+
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, age, email, password })
+      });
+      const data = await res.json();
+      alert(data.message || data.error);
+    } catch (err) {
+      console.error('Signup error:', err);
+    }
+  });
 });
