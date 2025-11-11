@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    Form.addEventListener('submit', async (e) => {
+    form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const username = inputUsername.value;
@@ -81,13 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const password = inputPassword.value;
 
     try {
-      const res = await fetch('http://localhost:5000/api/auth/register', {
+      const res = await fetch('http://localhost:5000/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, age, email, password })
       });
       const data = await res.json();
       alert(data.message || data.error);
+      window.location.href = 'log-in.html';
     } catch (err) {
       console.error('Signup error:', err);
     }
