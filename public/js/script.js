@@ -1,8 +1,8 @@
 const logoutLink = document.getElementById('logoutLink');
 const loginLink = document.getElementById('loginLink');
 const signupLink = document.getElementById('signupLink');
+const quiz = document.getElementById('quiz');
 
-if (logoutLink) {
   const token = localStorage.getItem('token');
 
   if (token) {
@@ -20,4 +20,13 @@ if (logoutLink) {
     alert('Logged out!');
     window.location.reload();
   });
-}
+
+  quiz.addEventListener('click', () => {
+    if (!token) {
+    alert('Please log in to access the test...');
+    window.location.href = './log-in.html';
+  } else {
+    window.location.href = './quiz.html';
+  }
+  });
+
