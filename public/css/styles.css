@@ -24,32 +24,6 @@ header {
 }
 
 
-.search {
-    flex: 1;
-    display: flex;
-}
-
-.search input {
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 25px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    transition: 0.3s ease;
-    background-color: #f5f5f5;
-}
-
-.search input:hover {
-    background-color: #fff;
-    border-color: #1B845A;
-    box-shadow: 0 0 5px rgba(27, 132, 90, 0.2);
-}
-
-.search input:focus {
-    outline: none;
-    border: 1px solid #1B845A;
-    box-shadow: 0 0 8px rgba(27, 132, 90, 0.3);
-}
 .new {
     display: flex;
     gap: 10px;
