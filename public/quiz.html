@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="bloom_logo.png">
 <title>Mental Health Questionnaire</title>
 <style>
   body { 
@@ -15,7 +14,8 @@
     align-items: center; 
     height: 100vh;
     margin: 0;
-     }
+  }
+
   .container { 
     width: 95%; 
     max-width: 700px; 
@@ -25,10 +25,12 @@
     border-radius: 15px; 
     text-align: center; 
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+  }
+
   h2 { 
     color: #276727;
-    }
+  }
+
   button.option { 
     display: block; 
     width: 100%; 
@@ -39,33 +41,43 @@
     background-color: #e4f5e4; 
     cursor: pointer; 
     transition: 0.2s;
-     }
+  }
+
   button.option:hover { 
     background-color: #c7ecc7;
-    }
+  }
+
   button.option.selected { 
     background-color: #76c776;
     color: white; 
-    }
-  #nextBtn {
-    margin-top: 20px; 
+  }
+
+  #buttonContainer {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  #nextBtn, #prevBtn {
     padding: 10px 25px; 
     background-color: #276727; 
     color: white; 
     border: none; 
     border-radius: 8px;
     cursor: pointer; 
-    display: block; 
-    margin-left: auto; 
-    margin-right: auto; 
-    }
-  #nextBtn:hover {
-     background-color: #2e7d32;
-     }
+    transition: background-color 0.2s ease;
+  }
+
+  #nextBtn:hover, #prevBtn:hover {
+    background-color: #2e7d32;
+  }
+
   .result {
-     text-align: left; 
-     margin-top: 20px; 
-    }
+    text-align: left; 
+    margin-top: 20px; 
+  }
+
   .bar-container { 
     background-color: #e0e0e0; 
     border-radius: 10px; 
@@ -73,23 +85,42 @@
     width: 100%; 
     height: 25px; 
     overflow: hidden;
-    }
+  }
+
   .bar {
-     height: 100%; 
-     border-radius: 10px; 
-     text-align: right; 
-     padding-right: 10px; 
-     color: white; 
-     font-weight: bold;
+    height: 100%; 
+    border-radius: 10px; 
+    text-align: right; 
+    padding-right: 10px; 
+    color: white; 
+    font-weight: bold;
     line-height: 25px; 
     width: 0%; 
     transition: width 1.5s ease; 
-    }
-  .Anxiety { background-color: #2e7d32; }
-  .Stress { background-color: #4caf50; }
-  .Depression { background-color: #81c784; }
-  .Happiness { background-color: #a5d6a7; }
-  .Overthinking { background-color: #66bb6a; }
+  }
+
+  .Anxiety { background-color: #124a15; }
+  .Stress { background-color: #227825; }
+  .Depression { background-color: #438f46; }
+  .Happiness { background-color: #89c08b; }
+  .Overthinking { background-color: #99d49c; }
+
+  #dashboardBtn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 12px 28px;
+    background-color: #276727;
+    color: white;
+    text-decoration: none;  
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.2s ease;
+  }
+
+  #dashboardBtn:hover {
+    background-color: #2e7d32;
+  }
 </style>
 </head>
 <body>
@@ -97,7 +128,12 @@
 <div class="container">
   <h2 id="question">Loading</h2>
   <div id="options"></div>
-  <button id="nextBtn">Next</button>
+
+  <div id="buttonContainer">
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+  </div>
+
   <div id="result" class="result"></div>
 </div>
 
@@ -128,11 +164,14 @@ const questions = [
 const options = ["Never", "Sometimes", "Often", "Always"];
 const factorScores = { Anxiety: 0, Stress: 0, Depression: 0, Happiness: 0, Overthinking: 0 };
 const factorweight = { "Never": 0, "Sometimes": 1, "Often": 2, "Always": 3 };
+
 let current = 0;
+let answers = Array(questions.length).fill(null);
 
 const questionQ1 = document.getElementById("question");
 const optionsOl = document.getElementById("options");
 const nextBtnEl = document.getElementById("nextBtn");
+const prevBtnEl = document.getElementById("prevBtn");
 const resultRl = document.getElementById("result");
 
 function showQuestion() {
@@ -140,6 +179,7 @@ function showQuestion() {
     calculateResult();
     return;
   }
+
   questionQ1.textContent = questions[current].text;
   optionsOl.innerHTML = "";
 
@@ -147,42 +187,56 @@ function showQuestion() {
     const btn = document.createElement("button");
     btn.textContent = opt;
     btn.className = "option";
+    if (answers[current] === opt) {
+      btn.classList.add("selected");
+    }
     btn.onclick = () => {
       Array.from(optionsOl.children).forEach(b => b.classList.remove("selected"));
       btn.classList.add("selected");
+      answers[current] = opt;
     };
     optionsOl.appendChild(btn);
   });
+
+  prevBtnEl.style.display = current === 0 ? "none" : "inline-block";
 }
 
 nextBtnEl.onclick = function () {
-  const selected = document.querySelector(".option.selected");
+  const selected = answers[current];
   if (!selected) {
     alert("Please select an option.");
     return;
   }
-
-  const factor = questions[current].factor;
-  let score = factorweight[selected.textContent];
-
-  if (factor === "Happiness") score = 3 - score;
-
-  factorScores[factor] += score;
   current++;
   showQuestion();
+};
+
+prevBtnEl.onclick = function () {
+  if (current > 0) {
+    current--;
+    showQuestion();
+  }
 };
 
 function calculateResult() {
   questionQ1.textContent = "Result";
   optionsOl.innerHTML = "";
   nextBtnEl.style.display = "none";
+  prevBtnEl.style.display = "none";
   resultRl.innerHTML = "";
+
+ 
+  for (let i = 0; i < questions.length; i++) {
+    const factor = questions[i].factor;
+    let score = factorweight[answers[i]];
+    if (factor === "Happiness") score = 3 - score;
+    factorScores[factor] += score;
+  }
 
   const totalScore = Object.values(factorScores).reduce((a,b) => a+b, 0);
 
   for (const f in factorScores) {
     const percent = totalScore ? (factorScores[f] / totalScore) * 100 : 0;
-
     const label = document.createElement("p");
     label.innerHTML = `<strong>${f}:</strong>`;
     const container = document.createElement("div");
@@ -195,10 +249,21 @@ function calculateResult() {
     resultRl.appendChild(label);
     resultRl.appendChild(container);
   }
+
+ 
+  const dashboardBtnContainer = document.createElement("div");
+  dashboardBtnContainer.style.textAlign = "center";
+
+  const dashboardBtn = document.createElement("a");
+  dashboardBtn.href = "#";
+  dashboardBtn.id = "dashboardBtn";
+  dashboardBtn.textContent = "Go to Dashboard";
+
+  dashboardBtnContainer.appendChild(dashboardBtn);
+  resultRl.appendChild(dashboardBtnContainer);
 }
 
 showQuestion();
 </script>
 </body>
 </html>
-
