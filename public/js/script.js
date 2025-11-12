@@ -2,6 +2,7 @@ const logoutLink = document.getElementById('logoutLink');
 const loginLink = document.getElementById('loginLink');
 const signupLink = document.getElementById('signupLink');
 const quiz = document.getElementById('quiz');
+const dashboard = document.getElementById('dashboard');
 
   const token = localStorage.getItem('token');
 
@@ -27,6 +28,15 @@ const quiz = document.getElementById('quiz');
     window.location.href = './log-in.html';
   } else {
     window.location.href = './quiz.html';
+  }
+  });
+
+  dashboard.addEventListener('click', () => {
+    if (!token) {
+    alert('Please log in to access the dashboard...');
+    window.location.href = './log-in.html';
+  } else {
+    window.location.href = './dashboard.html';
   }
   });
 
