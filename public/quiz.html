@@ -233,6 +233,8 @@ function calculateResult() {
     factorScores[factor] += score;
   }
 
+  localStorage.setItem("mentalHealthResult", JSON.stringify(factorScores));
+
   const totalScore = Object.values(factorScores).reduce((a,b) => a+b, 0);
 
   for (const f in factorScores) {
@@ -255,7 +257,7 @@ function calculateResult() {
   dashboardBtnContainer.style.textAlign = "center";
 
   const dashboardBtn = document.createElement("a");
-  dashboardBtn.href = "#";
+  dashboardBtn.href = "dashboard.html";
   dashboardBtn.id = "dashboardBtn";
   dashboardBtn.textContent = "Go to Dashboard";
 
